@@ -1,35 +1,34 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
 import Menu from './components/Menu'
 import Register from './components/Register'
 import History from './components/History'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   }
-}));
+}))
 
 function App() {
-
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <div className={classes.root}>
       <Menu />
-      <Grid 
+      <Grid
         container
-        direction="column" 
-        justify="center" 
-        alignItems="stretch" 
-        spacing="3"
+        direction="column"
+        justify="center"
+        alignItems="stretch"
+        spacing={3}
       >
         <Register />
         <History />
       </Grid>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

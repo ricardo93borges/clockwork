@@ -1,11 +1,11 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
-import Icon from '@material-ui/core/Icon';
-import Grid from '@material-ui/core/Grid';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
+import Fab from '@material-ui/core/Fab'
+import Icon from '@material-ui/core/Icon'
+import Grid from '@material-ui/core/Grid'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   cardContent: {
     textAlign: 'center',
     backgroundColor: '#FFF',
@@ -16,22 +16,21 @@ const useStyles = makeStyles(theme => ({
   icon: {
     marginRight: 10
   }
-}));
+}))
 
 function Register() {
-
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <Grid item xs={12}>
       <div className={classes.cardContent}>
-          <Fab variant="extended" color="primary">
-              <Icon className={classes.icon}>access_time</Icon> 
-              <Typography>Register</Typography>
-          </Fab>
+        <Fab variant="extended" color="primary">
+          <Icon className={classes.icon}>access_time</Icon>
+          <Typography>Register</Typography>
+        </Fab>
       </div>
     </Grid>
-  );
+  )
 }
 
-export default Register;
+export default Register
