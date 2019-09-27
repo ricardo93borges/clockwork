@@ -1,9 +1,6 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import Fab from '@material-ui/core/Fab'
-import Icon from '@material-ui/core/Icon'
-import Grid from '@material-ui/core/Grid'
+import { Grid, makeStyles, Typography, Fab, Icon } from '@material-ui/core'
+import FirebaseService from '../services/firebase'
 
 const useStyles = makeStyles((theme) => ({
   cardContent: {
@@ -24,7 +21,11 @@ function Register() {
   return (
     <Grid item xs={12}>
       <div className={classes.cardContent}>
-        <Fab variant="extended" color="primary">
+        <Fab
+          variant="extended"
+          color="primary"
+          onClick={() => FirebaseService.register()}
+        >
           <Icon className={classes.icon}>access_time</Icon>
           <Typography>Register</Typography>
         </Fab>
