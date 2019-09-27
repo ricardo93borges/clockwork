@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as moment from 'moment'
 import { Card, CardContent, Grid } from '@material-ui/core'
 import HistoryItem from './HistoryItem'
-import FirebaseService from '../services/firebase'
+import FirebaseService from '../../services/firebase'
 
 moment.locale('pt-br')
 

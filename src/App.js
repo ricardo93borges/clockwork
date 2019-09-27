@@ -2,8 +2,8 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Menu from './components/Menu'
-import Register from './components/Register'
-import History from './components/History'
+import Register from './components/register/Register'
+import History from './components/history/History'
 
 const useStyles = makeStyles((theme) => ({
   root: {
