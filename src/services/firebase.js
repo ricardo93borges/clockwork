@@ -1,14 +1,14 @@
 import { database } from '../utils/firebase'
 
 export default class FirebaseService {
-  static getRegisters = (callback) => {
+  static getRegisters = async (callback) => {
     try {
-      database.collection('records').onSnapshot((snapshot) => {
-        const items = snapshot.docs.map((doc) => ({
+      database.collection('registers').onSnapshot((snapshot) => {
+        const registers = snapshot.docs.map((doc) => ({
           id: doc.id,
-          date: doc.get('date').toDate()
+          dates: doc.data().dates.map((d) => d.toDate())
         }))
-        callback(items)
+        callback(registers)
       })
     } catch (error) {
       console.log(error.message)
@@ -31,6 +31,22 @@ export default class FirebaseService {
       }))
 
       return registers
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  static getRegister = async (id) => {
+    try {
+      const result = await database
+        .collection('registers')
+        .doc(id)
+        .get()
+
+      return {
+        id: result.id,
+        dates: result.get('dates').map((d) => d.toDate())
+      }
     } catch (error) {
       console.log(error.message)
     }

@@ -25,11 +25,11 @@ function formatRows(dates) {
 }
 
 function History() {
-  const [rows, setRows] = useState([])
+  const [registers, setRegisters] = useState([])
 
   useEffect(() => {
     FirebaseService.getRegisters((values) => {
-      setRows(formatRows(values))
+      setRegisters(values)
     })
   }, [])
 
@@ -37,8 +37,8 @@ function History() {
     <Grid item xs={12}>
       <Card>
         <CardContent>
-          {Object.keys(rows).map((date, index) => (
-            <HistoryItem row={rows[date]} date={date} index={index} key={index} />
+          {registers.map((register) => (
+            <HistoryItem register={register} key={register.id} />
           ))}
         </CardContent>
       </Card>

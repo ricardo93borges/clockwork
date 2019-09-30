@@ -4,16 +4,24 @@ import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import 'typeface-roboto'
-import { Route, BrowserRouter as Router } from 'react-router-dom'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import MomentUtils from '@date-io/moment'
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import Edit from './components/register/Edit'
+import Menu from './components/Menu'
 
 const routing = (
-  <Router>
-    <div>
-      <Route path="/" component={App} />
-      <Route path="/edit/:id" component={Edit} />
+  <MuiPickersUtilsProvider utils={MomentUtils}>
+    <div style={{ flexGrow: 1 }}>
+      <Router>
+        <Menu />
+        <Switch>
+          <Route path="/" exact component={App} />
+          <Route path="/register/edit/:id" component={Edit} />
+        </Switch>
+      </Router>
     </div>
-  </Router>
+  </MuiPickersUtilsProvider>
 )
 
 ReactDOM.render(routing, document.getElementById('root'))
