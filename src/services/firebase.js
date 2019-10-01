@@ -15,6 +15,22 @@ export default class FirebaseService {
     }
   }
 
+  static getRegister = async (id) => {
+    try {
+      const result = await database
+        .collection('registers')
+        .doc(id)
+        .get()
+
+      return {
+        id: result.id,
+        dates: result.get('dates').map((d) => d.toDate())
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   static getTodayRegisters = async () => {
     try {
       const start = new Date()
@@ -36,22 +52,6 @@ export default class FirebaseService {
     }
   }
 
-  static getRegister = async (id) => {
-    try {
-      const result = await database
-        .collection('registers')
-        .doc(id)
-        .get()
-
-      return {
-        id: result.id,
-        dates: result.get('dates').map((d) => d.toDate())
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-
   static register = async () => {
     try {
       const date = new Date()
@@ -60,6 +60,20 @@ export default class FirebaseService {
       if (registers.length < 4) {
         database.collection('records').add({ date })
       }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  static updateRegister = async (id, data) => {
+    try {
+      console.log(data)
+      const register = await database
+        .collection('registers')
+        .doc(id)
+        .update({ dates: data.dates })
+
+      console.log(register)
     } catch (error) {
       console.log(error.message)
     }
