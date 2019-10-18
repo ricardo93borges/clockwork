@@ -12,6 +12,7 @@ import {
   Grid
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import FirebaseService from '../../services/firebase'
 
 moment.locale('pt-br')
 
@@ -20,18 +21,22 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20
   },
   edit: {
-    cursor: 'pointer'
+    cursor: 'pointer',
+    marginRight: '15px'
+  },
+  delete: {
+    cursor: 'pointer',
   }
 }))
 
 function HistoryItem({ register }) {
   const classes = useStyles()
-  const date = moment(register.dates[0])
+  const date = moment(register.date)
 
   return (
     <div className={classes.item}>
       <Grid container>
-        <Grid item xs={11}>
+        <Grid item xs={9}>
           <Typography variant="subtitle1">{date.format('Y/M/D')}</Typography>
         </Grid>
         <Grid item xs={1} className={classes.edit}>
@@ -40,6 +45,16 @@ function HistoryItem({ register }) {
               edit
             </Icon>
           </Link>
+        </Grid>
+        <Grid item xs={1} className={classes.edit}>
+          <Icon
+            color={'primary'}
+            position="right"
+            className={classes.delete}
+            onClick={() => FirebaseService.delete(register.id)}
+          >
+            delete
+          </Icon>
         </Grid>
       </Grid>
       <Table size="small">
@@ -53,7 +68,7 @@ function HistoryItem({ register }) {
         </TableHead>
         <TableBody>
           <TableRow>
-            {register.dates.map((date, index) => (
+            {register.registers.map((date, index) => (
               <TableCell key={index}>{moment(date).format('H:m')}</TableCell>
             ))}
           </TableRow>

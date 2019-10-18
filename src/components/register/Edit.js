@@ -39,27 +39,27 @@ function Edit(props) {
     const getRegister = async (id) => {
       const register = await FirebaseService.getRegister(id)
 
-      if (register && register.dates.length > 0) {
-        const date = moment(register.dates[0])
-        setOriginalDate(register.dates[0])
+      if (register && register.registers.length > 0) {
+        const date = moment(register.date)
+        setOriginalDate(register.date)
         setTitle(date.format('Y/M/D'))
       }
 
       setRegister(register)
     }
     getRegister(id)
-  }, [])
+  }, [id])
 
   const remove = (index) => {
     const r = Object.assign({}, register)
-    r.dates.splice(index, 1)
+    r.registers.splice(index, 1)
     setRegister(r)
   }
 
   const add = () => {
-    if (register.dates.length >= 4) return
+    if (register.registers.length >= 4) return
     const r = Object.assign({}, register)
-    r.dates.push(new Date())
+    r.registers.push(new Date())
     setRegister(r)
   }
 
@@ -72,8 +72,13 @@ function Edit(props) {
 
     let newDate = new Date(str)
 
-    r.dates[index] = newDate
+    r.registers[index] = newDate
     setRegister(r)
+  }
+
+  const updateRegister = async (register) => {
+    await FirebaseService.updateRegister(register.id, register)
+    props.history.goBack()
   }
 
   return (
@@ -82,7 +87,7 @@ function Edit(props) {
         <CardContent>
           <Typography variant="subtitle1">{title}</Typography>
           {register &&
-            register.dates.map((date, index) => {
+            register.registers.map((date, index) => {
               return (
                 <Grid item key={index} xs={12}>
                   <KeyboardTimePicker
@@ -92,14 +97,14 @@ function Edit(props) {
                     value={date}
                     onChange={(date, value) => updateDate(index, date, value)}
                   />
-                  <Icon
+                  {/*  <Icon
                     color={'primary'}
                     position="right"
                     className={classes.deleteBtn}
                     onClick={() => remove(index)}
                   >
                     delete
-                  </Icon>
+                  </Icon> */}
                 </Grid>
               )
             })}
@@ -113,7 +118,7 @@ function Edit(props) {
             variant="contained"
             color="primary"
             className={classes.saveBtn}
-            onClick={() => FirebaseService.updateRegister(register.id, register)}
+            onClick={() => updateRegister(register)}
           >
             Save
           </Button>

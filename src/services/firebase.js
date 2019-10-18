@@ -4,10 +4,14 @@ export default class FirebaseService {
   static getRegisters = async (callback) => {
     try {
       database.collection('registers').onSnapshot((snapshot) => {
-        const registers = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          dates: doc.data().dates.map((d) => d.toDate())
-        }))
+        const registers = snapshot.docs.map((doc) => {
+          const data = doc.data()
+          return {
+            id: doc.id,
+            date: data.date.toDate(),
+            registers: data.registers.map((d) => d.toDate())
+          }
+        })
         callback(registers)
       })
     } catch (error) {
@@ -22,10 +26,13 @@ export default class FirebaseService {
         .doc(id)
         .get()
 
+      const data = result.data()
       return {
         id: result.id,
-        dates: result.get('dates').map((d) => d.toDate())
+        date: data.date.toDate(),
+        registers: data.registers.map((d) => d.toDate())
       }
+
     } catch (error) {
       console.log(error.message)
     }
@@ -37,14 +44,20 @@ export default class FirebaseService {
       start.setHours(0, 0, 0)
 
       const result = await database
-        .collection('records')
+        .collection('registers')
+        .orderBy('date')
         .where('date', '>=', start)
+        .limit(1)
         .get()
 
-      const registers = result.docs.map((doc) => ({
-        id: doc.id,
-        date: doc.get('date').toDate()
-      }))
+      const registers = result.docs.map((doc) => {
+        const data = doc.data()
+        return {
+          id: doc.id,
+          date: data.date.toDate(),
+          registers: data.registers.map((d) => d.toDate())
+        }
+      })
 
       return registers
     } catch (error) {
@@ -54,12 +67,21 @@ export default class FirebaseService {
 
   static register = async () => {
     try {
-      const date = new Date()
-      const registers = await this.getTodayRegisters()
+      const now = new Date()
+      const todayRegisters = await this.getTodayRegisters()
+      const todayRegister = todayRegisters.length > 0 ? todayRegisters[0] : null;
 
-      if (registers.length < 4) {
-        database.collection('records').add({ date })
+      if (!todayRegister || todayRegister.registers.length === 0) {
+        database.collection('registers').add({
+          date: now,
+          registers: [now]
+        })
+      } else if (todayRegister.registers.length < 4) {
+        database.collection('registers').doc(todayRegister.id).update({
+          registers: [...todayRegister.registers, new Date()]
+        })
       }
+
     } catch (error) {
       console.log(error.message)
     }
@@ -67,15 +89,21 @@ export default class FirebaseService {
 
   static updateRegister = async (id, data) => {
     try {
-      console.log(data)
-      const register = await database
+      await database
         .collection('registers')
         .doc(id)
-        .update({ dates: data.dates })
-
-      console.log(register)
+        .update({ registers: data.registers })
     } catch (error) {
       console.log(error.message)
     }
   }
+
+  static delete = async (id) => {
+    try {
+      await database.collection('registers').doc(id).delete();
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
 }

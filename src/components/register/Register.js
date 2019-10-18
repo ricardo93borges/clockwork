@@ -4,6 +4,7 @@ import FirebaseService from '../../services/firebase'
 
 const useStyles = makeStyles((theme) => ({
   cardContent: {
+    width: '100%',
     textAlign: 'center',
     backgroundColor: '#FFF',
     paddingTop: 20,

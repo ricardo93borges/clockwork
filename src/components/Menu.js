@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import {
   makeStyles,
   AppBar,
@@ -10,7 +11,8 @@ import {
   List,
   Divider,
   ListItem,
-  ListItemText
+  ListItemText,
+  ListItemIcon
 } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
@@ -21,11 +23,14 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1
   },
   list: {
-    width: 250
+    width: 250,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   }
 }))
 
-function Menu() {
+function Menu(props) {
   const classes = useStyles()
 
   const [state, setState] = React.useState({
@@ -71,17 +76,27 @@ function Menu() {
         <div
           className={classes.list}
           role="presentation"
-          onClick={toggleDrawer('left', false)}
-          onKeyDown={toggleDrawer('left', false)}
         >
           <List>
-            <ListItem button key={'report'}>
+            <ListItem button key={'home'} onClick={() => props.history.push('/')}>
+              <ListItemIcon>
+                <Icon>home</Icon>
+              </ListItemIcon>
+              <ListItemText primary={'Home'} />
+            </ListItem>
+            <ListItem button key={'report'} onClick={() => props.history.push('/')}>
+              <ListItemIcon>
+                <Icon>show_chart</Icon>
+              </ListItemIcon>
               <ListItemText primary={'Report'} />
             </ListItem>
           </List>
           <Divider />
           <List>
-            <ListItem button key={'logout'}>
+            <ListItem button key={'logout'} onClick={() => props.history.push('/')}>
+              <ListItemIcon>
+                <Icon>exit_to_app</Icon>
+              </ListItemIcon>
               <ListItemText primary={'Logout'} />
             </ListItem>
           </List>
@@ -91,4 +106,4 @@ function Menu() {
   )
 }
 
-export default Menu
+export default withRouter(Menu)
