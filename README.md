@@ -2,4 +2,4 @@
 
 ## Clockwork
 
-A PWA to keep track of work hours.
+A PWA to keep track of work hours and provide reports.
