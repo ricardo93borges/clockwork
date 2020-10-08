@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: '15px'
   },
   delete: {
-    cursor: 'pointer',
+    cursor: 'pointer'
   }
 }))
 
