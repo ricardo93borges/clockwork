@@ -1,4 +1,4 @@
-![](https://github.com/ricardo93borges/clockwork/workflows/Node%20CI/badge.svg)
+![](https://github.com/ricardo93borges/clockwork/workflows/CI/badge.svg)
 
 ## Clockwork
 
