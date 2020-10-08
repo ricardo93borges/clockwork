@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Menu(props) {
-  const classes = useStyles()
+  const { list, title, menuButton } = useStyles()
 
   const [state, setState] = React.useState({
     left: false
@@ -56,13 +56,13 @@ function Menu(props) {
           <IconButton
             onClick={toggleDrawer(true)}
             edge="start"
-            className={classes.menuButton}
+            className={menuButton}
             color="inherit"
             aria-label="menu"
           >
             <Icon>menu</Icon>
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={title}>
             Clockwork
           </Typography>
         </Toolbar>
@@ -73,10 +73,7 @@ function Menu(props) {
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
       >
-        <div
-          className={classes.list}
-          role="presentation"
-        >
+        <div className={list} role="presentation">
           <List>
             <ListItem button key={'home'} onClick={() => props.history.push('/')}>
               <ListItemIcon>
