@@ -7,7 +7,6 @@ import {
   Typography,
   Button,
   Divider,
-  Icon,
   makeStyles
 } from '@material-ui/core'
 import { KeyboardTimePicker } from '@material-ui/pickers'
