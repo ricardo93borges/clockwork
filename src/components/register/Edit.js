@@ -7,6 +7,7 @@ import {
   Typography,
   Button,
   Divider,
+  Icon,
   makeStyles
 } from '@material-ui/core'
 import { KeyboardTimePicker } from '@material-ui/pickers'
@@ -96,14 +97,14 @@ function Edit(props) {
                     value={date}
                     onChange={(date, value) => updateDate(index, date, value)}
                   />
-                  {/*  <Icon
+                  <Icon
                     color={'primary'}
                     position="right"
                     className={classes.deleteBtn}
                     onClick={() => remove(index)}
                   >
                     delete
-                  </Icon> */}
+                  </Icon>
                 </Grid>
               )
             })}
