@@ -81,7 +81,7 @@ function Menu(props) {
               </ListItemIcon>
               <ListItemText primary={'Home'} />
             </ListItem>
-            <ListItem button key={'report'} onClick={() => props.history.push('/')}>
+            <ListItem button key={'report'} onClick={() => props.history.push('/report')}>
               <ListItemIcon>
                 <Icon>show_chart</Icon>
               </ListItemIcon>
