@@ -1,5 +1,5 @@
 import React from 'react'
-import * as moment from 'moment'
+import { format } from 'date-fns'
 import {
   makeStyles,
   Typography,
@@ -13,8 +13,6 @@ import {
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import FirebaseService from '../../services/firebase'
-
-moment.locale('pt-br')
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -31,13 +29,15 @@ const useStyles = makeStyles((theme) => ({
 
 function HistoryItem({ register }) {
   const classes = useStyles()
-  const date = moment(register.date)
+  const date = new Date(register.date)
 
   return (
     <div className={classes.item}>
       <Grid container>
         <Grid item xs={9}>
-          <Typography variant="subtitle1">{date.format('Y/M/D')}</Typography>
+          <Typography variant="subtitle1">
+            {format(date, 'MM/dd/yyyy')}
+          </Typography>
         </Grid>
         <Grid item xs={1} className={classes.edit}>
           <Link to={`/register/edit/${register.id}`}>
@@ -69,7 +69,9 @@ function HistoryItem({ register }) {
         <TableBody>
           <TableRow>
             {register.registers.map((date, index) => (
-              <TableCell key={index}>{moment(date).format('H:m')}</TableCell>
+              <TableCell key={index}>
+                {format(new Date(date), 'H:m')}
+              </TableCell>
             ))}
           </TableRow>
         </TableBody>

@@ -5,15 +5,15 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import 'typeface-roboto'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns';
 import { Grid } from '@material-ui/core'
-import MomentUtils from '@date-io/moment'
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import Edit from './components/register/Edit'
 import Menu from './components/Menu'
 import Report from './components/report/Report'
 
 const routing = (
-  <MuiPickersUtilsProvider utils={MomentUtils}>
+  <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <Grid container spacing={1}>
       <Router>
         <Menu />

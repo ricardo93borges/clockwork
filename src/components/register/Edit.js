@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import * as moment from 'moment'
+import { format } from 'date-fns'
 import {
   Grid,
   Card,
@@ -40,9 +40,8 @@ function Edit(props) {
       const register = await FirebaseService.getRegister(id)
 
       if (register && register.registers.length > 0) {
-        const date = moment(register.date)
         setOriginalDate(register.date)
-        setTitle(date.format('Y/M/D'))
+        setTitle(format(new Date(register.date), 'MM/dd/yyyy'))
       }
 
       setRegister(register)
@@ -92,7 +91,6 @@ function Edit(props) {
                 <Grid item key={index} xs={12}>
                   <KeyboardTimePicker
                     margin="normal"
-                    id="time-picker"
                     label={index % 2 === 0 ? 'In' : 'Out'}
                     value={date}
                     onChange={(date, value) => updateDate(index, date, value)}
