@@ -32,7 +32,6 @@ export default class FirebaseService {
         date: data.date.toDate(),
         registers: data.registers.map((d) => d.toDate())
       }
-
     } catch (error) {
       console.log(error.message)
     }
@@ -69,7 +68,7 @@ export default class FirebaseService {
     try {
       const now = new Date()
       const todayRegisters = await this.getTodayRegisters()
-      const todayRegister = todayRegisters.length > 0 ? todayRegisters[0] : null;
+      const todayRegister = todayRegisters.length > 0 ? todayRegisters[0] : null
 
       if (!todayRegister || todayRegister.registers.length === 0) {
         database.collection('registers').add({
@@ -77,11 +76,13 @@ export default class FirebaseService {
           registers: [now]
         })
       } else if (todayRegister.registers.length < 4) {
-        database.collection('registers').doc(todayRegister.id).update({
-          registers: [...todayRegister.registers, new Date()]
-        })
+        database
+          .collection('registers')
+          .doc(todayRegister.id)
+          .update({
+            registers: [...todayRegister.registers, new Date()]
+          })
       }
-
     } catch (error) {
       console.log(error.message)
     }
@@ -100,10 +101,12 @@ export default class FirebaseService {
 
   static delete = async (id) => {
     try {
-      await database.collection('registers').doc(id).delete();
+      await database
+        .collection('registers')
+        .doc(id)
+        .delete()
     } catch (error) {
       console.log(error.message)
     }
   }
-
 }
