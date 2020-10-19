@@ -37,6 +37,33 @@ export default class FirebaseService {
     }
   }
 
+  static getRegistersByDate = async (startDate, endDate) => {
+    try {
+      startDate.setHours(0, 0)
+      endDate.setHours(23, 59)
+
+      const result = await database
+        .collection('registers')
+        .orderBy('date')
+        .where('date', '>=', startDate)
+        .where('date', '<=', endDate)
+        .get()
+
+      const registers = result.docs.map((doc) => {
+        const data = doc.data()
+        return {
+          id: doc.id,
+          date: data.date.toDate(),
+          registers: data.registers.map((d) => d.toDate())
+        }
+      })
+
+      return registers
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   static getTodayRegisters = async () => {
     try {
       const start = new Date()

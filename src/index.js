@@ -5,22 +5,25 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import 'typeface-roboto'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { Grid } from '@material-ui/core'
 import MomentUtils from '@date-io/moment'
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import Edit from './components/register/Edit'
 import Menu from './components/Menu'
+import Report from './components/report/Report'
 
 const routing = (
   <MuiPickersUtilsProvider utils={MomentUtils}>
-    <div style={{ flexGrow: 1 }}>
+    <Grid container spacing={1}>
       <Router>
         <Menu />
         <Switch>
           <Route path="/" exact component={App} />
           <Route path="/register/edit/:id" component={Edit} />
+          <Route path="/report" component={Report} />
         </Switch>
       </Router>
-    </div>
+    </Grid>
   </MuiPickersUtilsProvider>
 )
 
