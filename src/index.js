@@ -5,7 +5,7 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import 'typeface-roboto'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns';
+import DateFnsUtils from '@date-io/date-fns'
 import { Grid } from '@material-ui/core'
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import Edit from './components/register/Edit'

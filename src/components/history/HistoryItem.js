@@ -35,9 +35,7 @@ function HistoryItem({ register }) {
     <div className={classes.item}>
       <Grid container>
         <Grid item xs={9}>
-          <Typography variant="subtitle1">
-            {format(date, 'MM/dd/yyyy')}
-          </Typography>
+          <Typography variant="subtitle1">{format(date, 'MM/dd/yyyy')}</Typography>
         </Grid>
         <Grid item xs={1} className={classes.edit}>
           <Link to={`/register/edit/${register.id}`}>
@@ -69,9 +67,7 @@ function HistoryItem({ register }) {
         <TableBody>
           <TableRow>
             {register.registers.map((date, index) => (
-              <TableCell key={index}>
-                {format(new Date(date), 'H:m')}
-              </TableCell>
+              <TableCell key={index}>{format(new Date(date), 'H:m')}</TableCell>
             ))}
           </TableRow>
         </TableBody>
