@@ -63,7 +63,7 @@ function Report() {
                 <KeyboardDatePicker
                   margin="normal"
                   label="Start date"
-                  format="M/D/Y"
+                  format="M/d/Y"
                   maxDate={startMaxDate}
                   value={startDate}
                   onChange={(date, value) => handleStartDateChange(value)}
@@ -73,7 +73,7 @@ function Report() {
                 <KeyboardDatePicker
                   margin="normal"
                   label="End date"
-                  format="M/D/Y"
+                  format="M/d/Y"
                   minDate={endMinDate}
                   value={endDate}
                   onChange={(date, value) => handleEndDateChange(value)}
