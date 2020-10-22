@@ -1,7 +1,8 @@
-import * as firebase from 'firebase/app'
-import 'firebase/firestore'
+import * as firebase from 'firebase/app';
 
-require('dotenv').config()
+import 'firebase/firestore';
+
+require('dotenv').config();
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -12,8 +13,8 @@ const config = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
-}
+};
 
-firebase.initializeApp(config)
+firebase.initializeApp(config);
 
-export const database = firebase.firestore()
+export default firebase.firestore();

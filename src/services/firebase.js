@@ -1,109 +1,111 @@
-import { database } from '../utils/firebase'
+/* eslint-disable no-console */
+import * as database from '../utils/firebase';
 
 export default class FirebaseService {
-  static getRegisters = async (callback) => {
+  static async getRegisters(callback) {
     try {
       database.collection('registers').onSnapshot((snapshot) => {
         const registers = snapshot.docs.map((doc) => {
-          const data = doc.data()
+          const data = doc.data();
+
           return {
             id: doc.id,
             date: data.date.toDate(),
-            registers: data.registers.map((d) => d.toDate())
-          }
-        })
-        callback(registers)
-      })
+            registers: data.registers.map((d) => d.toDate()),
+          };
+        });
+
+        callback(registers);
+      });
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
   }
 
-  static getRegister = async (id) => {
+  static async getRegister(id) {
     try {
       const result = await database
         .collection('registers')
         .doc(id)
-        .get()
+        .get();
 
-      const data = result.data()
+      const data = result.data();
       return {
         id: result.id,
         date: data.date.toDate(),
-        registers: data.registers.map((d) => d.toDate())
-      }
-
+        registers: data.registers.map((d) => d.toDate()),
+      };
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
+      return null;
     }
   }
 
-  static getTodayRegisters = async () => {
+  static async getTodayRegisters() {
     try {
-      const start = new Date()
-      start.setHours(0, 0, 0)
+      const start = new Date();
+      start.setHours(0, 0, 0);
 
       const result = await database
         .collection('registers')
         .orderBy('date')
         .where('date', '>=', start)
         .limit(1)
-        .get()
+        .get();
 
       const registers = result.docs.map((doc) => {
-        const data = doc.data()
+        const data = doc.data();
         return {
           id: doc.id,
           date: data.date.toDate(),
-          registers: data.registers.map((d) => d.toDate())
-        }
-      })
+          registers: data.registers.map((d) => d.toDate()),
+        };
+      });
 
-      return registers
+      return registers;
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
+      return null;
     }
   }
 
-  static register = async () => {
+  static async register() {
     try {
-      const now = new Date()
-      const todayRegisters = await this.getTodayRegisters()
+      const now = new Date();
+      const todayRegisters = await this.getTodayRegisters();
       const todayRegister = todayRegisters.length > 0 ? todayRegisters[0] : null;
 
       if (!todayRegister || todayRegister.registers.length === 0) {
         database.collection('registers').add({
           date: now,
-          registers: [now]
-        })
+          registers: [now],
+        });
       } else if (todayRegister.registers.length < 4) {
         database.collection('registers').doc(todayRegister.id).update({
-          registers: [...todayRegister.registers, new Date()]
-        })
+          registers: [...todayRegister.registers, new Date()],
+        });
       }
-
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
   }
 
-  static updateRegister = async (id, data) => {
+  static async updateRegister(id, data) {
     try {
       await database
         .collection('registers')
         .doc(id)
-        .update({ registers: data.registers })
+        .update({ registers: data.registers });
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
   }
 
-  static delete = async (id) => {
+  static async delete(id) {
     try {
       await database.collection('registers').doc(id).delete();
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
   }
-
 }

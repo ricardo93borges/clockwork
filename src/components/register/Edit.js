@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import * as moment from 'moment'
+import React, { useState, useEffect } from 'react';
+
+import PropTypes from 'prop-types';
+import * as moment from 'moment';
 import {
   Grid,
   Card,
@@ -7,97 +9,97 @@ import {
   Typography,
   Button,
   Divider,
-  Icon,
-  makeStyles
-} from '@material-ui/core'
-import { KeyboardTimePicker } from '@material-ui/pickers'
-import FirebaseService from '../../services/firebase'
+  makeStyles,
+} from '@material-ui/core';
+import { KeyboardTimePicker } from '@material-ui/pickers';
 
-const useStyles = makeStyles((theme) => ({
+import * as FirebaseService from '../../services/firebase';
+
+const useStyles = makeStyles(() => ({
   buttonWrapper: {
-    padding: 10
+    padding: 10,
   },
   deleteBtn: {
     float: 'right',
     marginTop: 30,
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   saveBtn: {
-    float: 'right'
-  }
-}))
+    float: 'right',
+  },
+}));
 
-function Edit(props) {
-  const classes = useStyles()
-  const id = props.match.params.id
+function Edit({ match, history }) {
+  const classes = useStyles();
+  const { id } = match.params;
 
-  const [register, setRegister] = useState(null)
-  const [title, setTitle] = useState(null)
-  const [originalDate, setOriginalDate] = useState(null)
+  const [register, setRegister] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [originalDate, setOriginalDate] = useState(null);
 
   useEffect(() => {
-    const getRegister = async (id) => {
-      const register = await FirebaseService.getRegister(id)
+    const getRegister = async (registerId) => {
+      const foundRegister = await FirebaseService.getRegister(registerId);
 
-      if (register && register.registers.length > 0) {
-        const date = moment(register.date)
-        setOriginalDate(register.date)
-        setTitle(date.format('Y/M/D'))
+      if (foundRegister && foundRegister.registers.length > 0) {
+        const date = moment(foundRegister.date);
+        setOriginalDate(foundRegister.date);
+        setTitle(date.format('Y/M/D'));
       }
 
-      setRegister(register)
-    }
-    getRegister(id)
-  }, [id])
+      setRegister(foundRegister);
+    };
+    getRegister(id);
+  }, [id]);
 
-  const remove = (index) => {
-    const r = Object.assign({}, register)
-    r.registers.splice(index, 1)
-    setRegister(r)
-  }
+  // TODO: develop
+  // const remove = (index) => {
+  //   const r = { ...register };
+  //   r.registers.splice(index, 1);
+  //   setRegister(r);
+  // };
 
   const add = () => {
-    if (register.registers.length >= 4) return
-    const r = Object.assign({}, register)
-    r.registers.push(new Date())
-    setRegister(r)
-  }
+    if (register.registers.length >= 4) return;
+    const r = { ...register };
+    r.registers.push(new Date());
+    setRegister(r);
+  };
 
-  const updateDate = (index, date, value) => {
-    const r = Object.assign({}, register)
+  const updateDate = (index, date) => {
+    const r = { ...register };
 
-    let str = `${originalDate.getFullYear()}/
+    const str = `${originalDate.getFullYear()}/
       ${originalDate.getMonth() + 1}/
-      ${originalDate.getDate()} ${date.format('H:m')}`
+      ${originalDate.getDate()} ${date.format('H:m')}`;
 
-    let newDate = new Date(str)
+    const newDate = new Date(str);
 
-    r.registers[index] = newDate
-    setRegister(r)
-  }
+    r.registers[index] = newDate;
+    setRegister(r);
+  };
 
-  const updateRegister = async (register) => {
-    await FirebaseService.updateRegister(register.id, register)
-    props.history.goBack()
-  }
+  const updateRegister = async (registerToUpdate) => {
+    await FirebaseService.updateRegister(registerToUpdate.id, register);
+    history.goBack();
+  };
 
   return (
     <Grid item xs={12}>
       <Card>
         <CardContent>
           <Typography variant="subtitle1">{title}</Typography>
-          {register &&
-            register.registers.map((date, index) => {
-              return (
-                <Grid item key={index} xs={12}>
-                  <KeyboardTimePicker
-                    margin="normal"
-                    id="time-picker"
-                    label={index % 2 === 0 ? 'In' : 'Out'}
-                    value={date}
-                    onChange={(date, value) => updateDate(index, date, value)}
-                  />
-                  {/*  <Icon
+          {register
+            && register.registers.map((date, index) => (
+              <Grid item key={date} xs={12}>
+                <KeyboardTimePicker
+                  margin="normal"
+                  id="time-picker"
+                  label={index % 2 === 0 ? 'In' : 'Out'}
+                  value={date}
+                  onChange={(dateValue, value) => updateDate(index, dateValue, value)}
+                />
+                {/*  <Icon
                     color={'primary'}
                     position="right"
                     className={classes.deleteBtn}
@@ -105,9 +107,8 @@ function Edit(props) {
                   >
                     delete
                   </Icon> */}
-                </Grid>
-              )
-            })}
+              </Grid>
+            ))}
         </CardContent>
         <Divider />
         <div className={classes.buttonWrapper}>
@@ -125,7 +126,17 @@ function Edit(props) {
         </div>
       </Card>
     </Grid>
-  )
+  );
 }
 
-export default Edit
+Edit.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any),
+  match: PropTypes.objectOf(PropTypes.any),
+};
+
+Edit.defaultProps = {
+  history: PropTypes.any,
+  match: PropTypes.any,
+};
+
+export default Edit;

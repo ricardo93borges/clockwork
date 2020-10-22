@@ -1,23 +1,25 @@
-import React from 'react'
-import { Grid, makeStyles, Typography, Fab, Icon } from '@material-ui/core'
-import FirebaseService from '../../services/firebase'
+import React from 'react';
+import {
+  Grid, makeStyles, Typography, Fab, Icon,
+} from '@material-ui/core';
+import FirebaseService from '../../services/firebase';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   cardContent: {
     width: '100%',
     textAlign: 'center',
     backgroundColor: '#FFF',
     paddingTop: 20,
     paddingBottom: 20,
-    boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.12)'
+    boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.12)',
   },
   icon: {
-    marginRight: 10
-  }
-}))
+    marginRight: 10,
+  },
+}));
 
 function Register() {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <Grid item xs={12}>
@@ -32,7 +34,7 @@ function Register() {
         </Fab>
       </div>
     </Grid>
-  )
+  );
 }
 
-export default Register
+export default Register;

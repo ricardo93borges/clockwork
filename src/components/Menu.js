@@ -1,5 +1,7 @@
-import React from 'react'
-import { withRouter } from 'react-router-dom'
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+
+import PropTypes from 'prop-types';
 import {
   makeStyles,
   AppBar,
@@ -12,42 +14,42 @@ import {
   Divider,
   ListItem,
   ListItemText,
-  ListItemIcon
-} from '@material-ui/core'
+  ListItemIcon,
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   list: {
     width: 250,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between'
-  }
-}))
+    justifyContent: 'space-between',
+  },
+}));
 
 function Menu(props) {
-  const classes = useStyles()
+  const classes = useStyles();
 
   const [state, setState] = React.useState({
-    left: false
-  })
+    left: false,
+  });
 
   const toggleDrawer = (open) => (event) => {
     if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
+      event
+      && event.type === 'keydown'
+      && (event.key === 'Tab' || event.key === 'Shift')
     ) {
-      return
+      return;
     }
 
-    setState({ ...state, left: open })
-  }
+    setState({ ...state, left: open });
+  };
 
   return (
     <>
@@ -78,32 +80,40 @@ function Menu(props) {
           role="presentation"
         >
           <List>
-            <ListItem button key={'home'} onClick={() => props.history.push('/')}>
+            <ListItem button key="home" onClick={() => props.history.push('/')}>
               <ListItemIcon>
                 <Icon>home</Icon>
               </ListItemIcon>
-              <ListItemText primary={'Home'} />
+              <ListItemText primary="Home" />
             </ListItem>
-            <ListItem button key={'report'} onClick={() => props.history.push('/')}>
+            <ListItem button key="report" onClick={() => props.history.push('/')}>
               <ListItemIcon>
                 <Icon>show_chart</Icon>
               </ListItemIcon>
-              <ListItemText primary={'Report'} />
+              <ListItemText primary="Report" />
             </ListItem>
           </List>
           <Divider />
           <List>
-            <ListItem button key={'logout'} onClick={() => props.history.push('/')}>
+            <ListItem button key="logout" onClick={() => props.history.push('/')}>
               <ListItemIcon>
                 <Icon>exit_to_app</Icon>
               </ListItemIcon>
-              <ListItemText primary={'Logout'} />
+              <ListItemText primary="Logout" />
             </ListItem>
           </List>
         </div>
       </SwipeableDrawer>
     </>
-  )
+  );
 }
 
-export default withRouter(Menu)
+Menu.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any),
+};
+
+Menu.defaultProps = {
+  history: PropTypes.any,
+};
+
+export default withRouter(Menu);

@@ -1,5 +1,7 @@
-import React from 'react'
-import * as moment from 'moment'
+import React from 'react';
+import * as moment from 'moment';
+import PropTypes from 'prop-types';
+
 import {
   makeStyles,
   Typography,
@@ -9,29 +11,30 @@ import {
   TableHead,
   TableRow,
   Icon,
-  Grid
-} from '@material-ui/core'
-import { Link } from 'react-router-dom'
-import FirebaseService from '../../services/firebase'
+  Grid,
+} from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-moment.locale('pt-br')
+import * as FirebaseService from '../../services/firebase';
 
-const useStyles = makeStyles((theme) => ({
+moment.locale('pt-br');
+
+const useStyles = makeStyles(() => ({
   item: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   edit: {
     cursor: 'pointer',
-    marginRight: '15px'
+    marginRight: '15px',
   },
   delete: {
     cursor: 'pointer',
-  }
-}))
+  },
+}));
 
 function HistoryItem({ register }) {
-  const classes = useStyles()
-  const date = moment(register.date)
+  const classes = useStyles();
+  const date = moment(register.date);
 
   return (
     <div className={classes.item}>
@@ -41,14 +44,14 @@ function HistoryItem({ register }) {
         </Grid>
         <Grid item xs={1} className={classes.edit}>
           <Link to={`/register/edit/${register.id}`}>
-            <Icon color={'primary'} position="right">
+            <Icon color="primary" position="right">
               edit
             </Icon>
           </Link>
         </Grid>
         <Grid item xs={1} className={classes.edit}>
           <Icon
-            color={'primary'}
+            color="primary"
             position="right"
             className={classes.delete}
             onClick={() => FirebaseService.delete(register.id)}
@@ -60,22 +63,32 @@ function HistoryItem({ register }) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell align={'center'}>In</TableCell>
-            <TableCell align={'center'}>Out</TableCell>
-            <TableCell align={'center'}>In</TableCell>
-            <TableCell align={'center'}>Out</TableCell>
+            <TableCell align="center">In</TableCell>
+            <TableCell align="center">Out</TableCell>
+            <TableCell align="center">In</TableCell>
+            <TableCell align="center">Out</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
-            {register.registers.map((date, index) => (
-              <TableCell key={index}>{moment(date).format('H:m')}</TableCell>
+            {register.registers.map((registerDate) => (
+              <TableCell key={registerDate}>
+                {moment(registerDate).format('H:m')}
+              </TableCell>
             ))}
           </TableRow>
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }
 
-export default HistoryItem
+HistoryItem.propTypes = {
+  register: PropTypes.objectOf(PropTypes.any),
+};
+
+HistoryItem.defaultProps = {
+  register: { date: null },
+};
+
+export default HistoryItem;

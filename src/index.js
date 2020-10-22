@@ -1,14 +1,17 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './index.css'
-import App from './App'
-import * as serviceWorker from './serviceWorker'
-import 'typeface-roboto'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
-import MomentUtils from '@date-io/moment'
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
-import Edit from './components/register/Edit'
-import Menu from './components/Menu'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+import * as serviceWorker from './serviceWorker';
+
+import Edit from './components/register/Edit';
+import Menu from './components/Menu';
+import App from './App';
+
+import 'typeface-roboto';
+import './index.css';
 
 const routing = (
   <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -22,8 +25,8 @@ const routing = (
       </Router>
     </div>
   </MuiPickersUtilsProvider>
-)
+);
 
-ReactDOM.render(routing, document.getElementById('root'))
+ReactDOM.render(routing, document.getElementById('root'));
 
-serviceWorker.register()
+serviceWorker.register();
