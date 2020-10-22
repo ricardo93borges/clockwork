@@ -1,8 +1,10 @@
 env:
   browser: true
   es6: true
+  jest: true
 extends:
   - "plugin:react/recommended"
+  - "plugin:react-svg/recommended"
   - airbnb
 globals:
   Atomics: readonly
@@ -20,3 +22,6 @@ rules:
     - "extensions":
         - ".js"
         - ".jsx"
+  "no-param-reassign":
+    - 2
+    - "props": false
