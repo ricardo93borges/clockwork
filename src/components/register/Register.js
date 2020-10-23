@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, makeStyles, Typography, Fab, Icon } from '@material-ui/core'
-import FirebaseService from '../../services/firebase'
+import * as FirebaseService from '../../services/firebase'
 
 const useStyles = makeStyles((theme) => ({
   cardContent: {

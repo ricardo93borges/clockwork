@@ -12,7 +12,7 @@ import {
   Grid
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import FirebaseService from '../../services/firebase'
+import * as FirebaseService from '../../services/firebase'
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -49,7 +49,7 @@ function HistoryItem({ register }) {
             color={'primary'}
             position="right"
             className={classes.delete}
-            onClick={() => FirebaseService.delete(register.id)}
+            onClick={() => FirebaseService.deleteRegister(register.id)}
           >
             delete
           </Icon>
