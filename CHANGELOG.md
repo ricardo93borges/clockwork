@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Menu in registers history with edit and delete options
 
 ### Changed
 - Replace MomentJS for date-fns
