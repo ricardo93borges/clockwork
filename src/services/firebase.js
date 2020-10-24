@@ -78,7 +78,7 @@ export const getTodayRegisters = async () => {
 export const register = async () => {
   try {
     const now = new Date()
-    const todayRegisters = await this.getTodayRegisters()
+    const todayRegisters = await getTodayRegisters()
     const todayRegister = todayRegisters.length > 0 ? todayRegisters[0] : null
 
     if (!todayRegister || todayRegister.registers.length === 0) {
