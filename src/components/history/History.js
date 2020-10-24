@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, CardContent, Grid } from '@material-ui/core'
 import HistoryItem from './HistoryItem'
-import FirebaseService from '../../services/firebase'
+import * as FirebaseService from '../../services/firebase'
 
 function History() {
   const [registers, setRegisters] = useState([])

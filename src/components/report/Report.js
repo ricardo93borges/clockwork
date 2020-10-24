@@ -7,7 +7,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import FirebaseService from '../../services/firebase'
+import * as FirebaseService from '../../services/firebase'
 
 function Report() {
   const date = new Date()

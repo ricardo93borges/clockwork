@@ -11,7 +11,7 @@ import {
   makeStyles
 } from '@material-ui/core'
 import { KeyboardTimePicker } from '@material-ui/pickers'
-import FirebaseService from '../../services/firebase'
+import * as FirebaseService from '../../services/firebase'
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
