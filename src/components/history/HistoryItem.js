@@ -1,5 +1,5 @@
 import React from 'react'
-import * as moment from 'moment'
+import { format } from 'date-fns'
 import {
   makeStyles,
   Typography,
@@ -8,53 +8,95 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Icon,
-  Grid
+  Grid,
+  Menu,
+  IconButton,
+  MenuItem
 } from '@material-ui/core'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
 import { Link } from 'react-router-dom'
-import FirebaseService from '../../services/firebase'
-
-moment.locale('pt-br')
+import * as FirebaseService from '../../services/firebase'
 
 const useStyles = makeStyles((theme) => ({
   item: {
-    marginBottom: 20
+    marginBottom: 30
   },
-  edit: {
+  menuItem: {
     cursor: 'pointer',
-    marginRight: '15px'
+    marginRight: '15px',
+    textDecoration: 'none',
+    color: '#000'
   },
-  delete: {
-    cursor: 'pointer'
+  moreMenuButton: {
+    padding: 0
   }
 }))
 
 function HistoryItem({ register }) {
   const classes = useStyles()
-  const date = moment(register.date)
+  const [anchorElement, setAnchorEl] = React.useState(null)
+
+  const open = Boolean(anchorElement)
+  const date = new Date(register.date)
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  const handleDelete = () => {
+    FirebaseService.deleteRegister(register.id)
+    handleClose()
+  }
 
   return (
     <div className={classes.item}>
       <Grid container>
-        <Grid item xs={9}>
-          <Typography variant="subtitle1">{date.format('Y/M/D')}</Typography>
+        <Grid item xs={11}>
+          <Typography variant="subtitle1">{format(date, 'MM/dd/yyyy')}</Typography>
         </Grid>
-        <Grid item xs={1} className={classes.edit}>
-          <Link to={`/register/edit/${register.id}`}>
-            <Icon color={'primary'} position="right">
-              edit
-            </Icon>
-          </Link>
-        </Grid>
-        <Grid item xs={1} className={classes.edit}>
-          <Icon
-            color={'primary'}
-            position="right"
-            className={classes.delete}
-            onClick={() => FirebaseService.delete(register.id)}
+        <Grid item xs={1}>
+          <IconButton
+            className={classes.moreMenuButton}
+            aria-label="more"
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
           >
-            delete
-          </Icon>
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            anchorEl={anchorElement}
+            keepMounted
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                maxHeight: 48 * 4.5,
+                width: '20ch'
+              }
+            }}
+          >
+            <MenuItem key="edit" onClick={handleClose}>
+              <Link
+                to={`/register/edit/${register.id}`}
+                className={classes.menuItem}
+              >
+                Edit
+              </Link>
+            </MenuItem>
+            <MenuItem
+              key="delete"
+              onClick={handleDelete}
+              className={classes.menuItem}
+            >
+              Delete
+            </MenuItem>
+          </Menu>
         </Grid>
       </Grid>
       <Table size="small">
@@ -69,7 +111,7 @@ function HistoryItem({ register }) {
         <TableBody>
           <TableRow>
             {register.registers.map((date, index) => (
-              <TableCell key={index}>{moment(date).format('H:m')}</TableCell>
+              <TableCell key={index}>{format(new Date(date), 'H:m')}</TableCell>
             ))}
           </TableRow>
         </TableBody>
