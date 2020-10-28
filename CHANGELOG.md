@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2020-10-28
+
 ### Added
 - Menu in registers history with edit and delete options
 - Heroku deploy action in main workflow
