@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Menu in registers history with edit and delete options
+- Heroku deploy action in main workflow
 
 ### Changed
 - Replace MomentJS for date-fns
