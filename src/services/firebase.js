@@ -44,7 +44,7 @@ export const getRegistersByDate = async (startDate, endDate) => {
 
     const result = await database
       .collection('registers')
-      .orderBy('date')
+      .orderBy('date', 'desc')
       .where('date', '>=', startDate)
       .where('date', '<=', endDate)
       .get()

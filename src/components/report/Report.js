@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { format, subDays, addDays, differenceInHours } from 'date-fns'
+import { format, differenceInHours } from 'date-fns'
 import { Card, CardContent, Grid } from '@material-ui/core'
-import { KeyboardDatePicker } from '@material-ui/pickers'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import * as FirebaseService from '../../services/firebase'
+import useDateFilter from '../date-filter/DateFilter'
 
 function Report() {
-  const date = new Date()
   const [registers, setRegisters] = useState([])
-  const [startDate, setStartDate] = useState(subDays(date, 1))
-  const [endDate, setEndDate] = useState(date)
-  const [startMaxDate, setStartMaxDate] = useState(subDays(date, 1))
-  const [endMinDate, setEndMinDate] = useState(date)
+  const { DateFilter, startDate, endDate } = useDateFilter()
 
   useEffect(() => {
     async function getRegistersByDate(startDate, endDate) {
@@ -24,18 +20,6 @@ function Report() {
     }
     getRegistersByDate(startDate, endDate)
   }, [startDate, endDate])
-
-  const handleStartDateChange = (value) => {
-    const date = new Date(value)
-    setStartDate(date)
-    setEndMinDate(addDays(date, 1))
-  }
-
-  const handleEndDateChange = (value) => {
-    const date = new Date(value)
-    setEndDate(date)
-    setStartMaxDate(subDays(new Date(value), 1))
-  }
 
   const sumTime = (registers) => {
     if (registers.length % 2 !== 0) {
@@ -56,32 +40,7 @@ function Report() {
   return (
     <>
       <Grid item xs={12}>
-        <Card>
-          <CardContent>
-            <Grid item container direction="row" justify="space-around">
-              <Grid item xs={5}>
-                <KeyboardDatePicker
-                  margin="normal"
-                  label="Start date"
-                  format="M/d/Y"
-                  maxDate={startMaxDate}
-                  value={startDate}
-                  onChange={(date, value) => handleStartDateChange(value)}
-                />
-              </Grid>
-              <Grid item xs={5}>
-                <KeyboardDatePicker
-                  margin="normal"
-                  label="End date"
-                  format="M/d/Y"
-                  minDate={endMinDate}
-                  value={endDate}
-                  onChange={(date, value) => handleEndDateChange(value)}
-                />
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
+        <DateFilter />
       </Grid>
       <Grid item xs={12}>
         <Card>
