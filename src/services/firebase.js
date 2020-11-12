@@ -37,7 +37,7 @@ export const getRegister = async (id) => {
   }
 }
 
-export const getRegistersByDate = async (startDate, endDate) => {
+export const getRegistersByDate = async (startDate, endDate, callback) => {
   try {
     startDate.setHours(0, 0)
     endDate.setHours(23, 59)
@@ -47,7 +47,10 @@ export const getRegistersByDate = async (startDate, endDate) => {
       .orderBy('date', 'desc')
       .where('date', '>=', startDate)
       .where('date', '<=', endDate)
-      .get()
+      .onSnapshot((snapshot) => {
+        const formattedRegisters = formatRegisters(snapshot.docs)
+        callback(formattedRegisters)
+      })
 
     const formattedRegisters = formatRegisters(result.docs)
     return formattedRegisters

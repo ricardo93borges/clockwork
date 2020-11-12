@@ -15,9 +15,11 @@ function Report() {
 
   useEffect(() => {
     async function getRegistersByDate(startDate, endDate) {
-      const registers = await FirebaseService.getRegistersByDate(startDate, endDate)
-      setRegisters(registers)
+      await FirebaseService.getRegistersByDate(startDate, endDate, (registers) => {
+        setRegisters(registers)
+      })
     }
+
     getRegistersByDate(startDate, endDate)
   }, [startDate, endDate])
 
