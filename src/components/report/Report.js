@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { format, differenceInHours } from 'date-fns'
 import { Card, CardContent, Grid } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import EditIcon from '@material-ui/icons/Edit'
 import * as FirebaseService from '../../services/firebase'
 import useDateFilter from '../date-filter/DateFilter'
 
@@ -52,6 +54,7 @@ function Report() {
                 <TableRow>
                   <TableCell>Day</TableCell>
                   <TableCell>Time</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -62,6 +65,11 @@ function Report() {
                         {format(new Date(register.date), 'MM/dd/yyyy')}
                       </TableCell>
                       <TableCell>{`${sumTime(register.registers)}h`}</TableCell>
+                      <TableCell style={{ textAlign: 'center' }}>
+                        <Link to={`/register/edit/${register.id}`}>
+                          <EditIcon />
+                        </Link>
+                      </TableCell>
                     </TableRow>
                   ))}
               </TableBody>
