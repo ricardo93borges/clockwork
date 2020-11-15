@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+## [0.5.0] - 2020-11-15
+
+### Added
 - Filter by date on home screen
 - Link to edit register on report screen
 - Replace icons
