@@ -67,7 +67,7 @@ function Edit(props) {
 
     let str = `${originalDate.getFullYear()}/
       ${originalDate.getMonth() + 1}/
-      ${originalDate.getDate()} ${date.format('H:m')}`
+      ${originalDate.getDate()} ${format(new Date(date), 'H:m')}`
 
     let newDate = new Date(str)
 
