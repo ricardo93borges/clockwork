@@ -1,33 +1,20 @@
 import React from 'react'
-import { Grid, makeStyles, Typography, Fab, Icon } from '@material-ui/core'
+import { Grid, Typography, Fab, Icon } from '@material-ui/core'
 import * as FirebaseService from '../../services/firebase'
-
-const useStyles = makeStyles((theme) => ({
-  cardContent: {
-    width: '100%',
-    textAlign: 'center',
-    backgroundColor: '#FFF',
-    paddingTop: 20,
-    paddingBottom: 20,
-    boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.12)'
-  },
-  icon: {
-    marginRight: 10
-  }
-}))
+import { useStyles } from '../../style/style'
 
 function Register() {
-  const classes = useStyles()
+  const { cardContent, icon } = useStyles()
 
   return (
     <Grid item xs={12}>
-      <div className={classes.cardContent}>
+      <div className={cardContent}>
         <Fab
           variant="extended"
           color="primary"
           onClick={() => FirebaseService.register()}
         >
-          <Icon className={classes.icon}>access_time</Icon>
+          <Icon className={icon}>access_time</Icon>
           <Typography>Register</Typography>
         </Fab>
       </div>

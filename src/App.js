@@ -5,13 +5,7 @@ import History from './components/history/History'
 
 function App() {
   return (
-    <Grid
-      container
-      direction="column"
-      justify="center"
-      alignItems="stretch"
-      spacing={3}
-    >
+    <Grid container>
       <Register />
       <History />
     </Grid>
