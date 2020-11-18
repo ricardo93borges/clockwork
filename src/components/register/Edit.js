@@ -7,7 +7,7 @@ import {
   Typography,
   Button,
   Divider,
-  Icon,
+  Icon
 } from '@material-ui/core'
 import { KeyboardTimePicker } from '@material-ui/pickers'
 import * as FirebaseService from '../../services/firebase'

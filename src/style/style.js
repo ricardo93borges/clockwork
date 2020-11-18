@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core'
 
 export const useStyles = makeStyles((theme) => ({
   card: {
-    padding: '10px 5px',
+    padding: '10px 5px'
   },
   cardContent: {
     width: '100%',
@@ -26,5 +26,5 @@ export const useStyles = makeStyles((theme) => ({
   },
   saveBtn: {
     float: 'right'
-  },
+  }
 }))
