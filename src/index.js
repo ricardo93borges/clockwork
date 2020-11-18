@@ -14,7 +14,7 @@ import Report from './components/report/Report'
 
 const routing = (
   <MuiPickersUtilsProvider utils={DateFnsUtils}>
-    <Grid container spacing={1}>
+    <Grid container>
       <Router>
         <Menu />
         <Switch>

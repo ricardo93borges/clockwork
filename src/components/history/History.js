@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Card, CardContent, Grid } from '@material-ui/core'
-import HistoryItem from './HistoryItem'
 import * as FirebaseService from '../../services/firebase'
+import HistoryItem from './HistoryItem'
 import useDateFilter from '../date-filter/DateFilter'
+import { useStyles } from '../../style/style'
 
 function History() {
+  const { card } = useStyles()
   const [registers, setRegisters] = useState([])
   const { DateFilter, startDate, endDate } = useDateFilter()
 
@@ -20,10 +22,10 @@ function History() {
 
   return (
     <>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={card}>
         <DateFilter />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={card}>
         <Card>
           <CardContent>
             {registers.map((register) => (

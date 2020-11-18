@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { format, differenceInHours } from 'date-fns'
+import { format, differenceInMinutes } from 'date-fns'
 import { Card, CardContent, Grid } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import Table from '@material-ui/core/Table'
@@ -10,8 +10,10 @@ import TableRow from '@material-ui/core/TableRow'
 import EditIcon from '@material-ui/icons/Edit'
 import * as FirebaseService from '../../services/firebase'
 import useDateFilter from '../date-filter/DateFilter'
+import { useStyles } from '../../style/style'
 
 function Report() {
+  const { card } = useStyles()
   const [registers, setRegisters] = useState([])
   const { DateFilter, startDate, endDate } = useDateFilter()
 
@@ -35,18 +37,18 @@ function Report() {
     while (i < registers.length) {
       const leftDate = new Date(registers[i])
       const rightDate = new Date(registers[i + 1])
-      time += Math.abs(differenceInHours(leftDate, rightDate))
+      time += Math.abs(differenceInMinutes(leftDate, rightDate))
       i += 2
     }
-    return time
+    return (time / 60).toFixed(2)
   }
 
   return (
     <>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={card}>
         <DateFilter />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={card}>
         <Card>
           <CardContent>
             <Table>

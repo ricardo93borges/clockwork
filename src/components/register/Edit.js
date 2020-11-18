@@ -8,27 +8,13 @@ import {
   Button,
   Divider,
   Icon,
-  makeStyles
 } from '@material-ui/core'
 import { KeyboardTimePicker } from '@material-ui/pickers'
 import * as FirebaseService from '../../services/firebase'
-
-const useStyles = makeStyles((theme) => ({
-  buttonWrapper: {
-    padding: 10
-  },
-  deleteBtn: {
-    float: 'right',
-    marginTop: 30,
-    cursor: 'pointer'
-  },
-  saveBtn: {
-    float: 'right'
-  }
-}))
+import { useStyles } from '../../style/style'
 
 function Edit(props) {
-  const classes = useStyles()
+  const { buttonWrapper, deleteBtn, saveBtn, card } = useStyles()
   const id = props.match.params.id
 
   const [register, setRegister] = useState(null)
@@ -81,7 +67,7 @@ function Edit(props) {
   }
 
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} className={card}>
       <Card>
         <CardContent>
           <Typography variant="subtitle1">{title}</Typography>
@@ -98,7 +84,7 @@ function Edit(props) {
                   <Icon
                     color={'primary'}
                     position="right"
-                    className={classes.deleteBtn}
+                    className={deleteBtn}
                     onClick={() => remove(index)}
                   >
                     delete
@@ -108,14 +94,14 @@ function Edit(props) {
             })}
         </CardContent>
         <Divider />
-        <div className={classes.buttonWrapper}>
+        <div className={buttonWrapper}>
           <Button variant="contained" color="primary" onClick={() => add()}>
             Add
           </Button>
           <Button
             variant="contained"
             color="primary"
-            className={classes.saveBtn}
+            className={saveBtn}
             onClick={() => updateRegister(register)}
           >
             Save
