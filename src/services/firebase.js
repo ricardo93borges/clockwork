@@ -42,7 +42,7 @@ export const getRegistersByDate = async (startDate, endDate, callback) => {
     startDate.setHours(0, 0)
     endDate.setHours(23, 59)
 
-    const result = await database
+    const { docs } = await database
       .collection('registers')
       .orderBy('date', 'desc')
       .where('date', '>=', startDate)
@@ -52,8 +52,7 @@ export const getRegistersByDate = async (startDate, endDate, callback) => {
         callback(formattedRegisters)
       })
 
-    const formattedRegisters = formatRegisters(result.docs)
-    return formattedRegisters
+    return formatRegisters(docs)
   } catch (error) {
     console.log(error.message)
   }
@@ -64,15 +63,14 @@ export const getTodayRegisters = async () => {
     const start = new Date()
     start.setHours(0, 0, 0)
 
-    const result = await database
+    const { docs } = await database
       .collection('registers')
       .orderBy('date')
       .where('date', '>=', start)
       .limit(1)
       .get()
 
-    const formattedRegisters = formatRegisters(result.docs)
-    return formattedRegisters
+    return formatRegisters(docs)
   } catch (error) {
     console.log(error.message)
   }
