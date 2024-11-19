@@ -9,7 +9,7 @@
     "@material-ui/pickers": "^3.2.10",
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
-    "firebase": "^7.24.0",
+    "firebase": "^10.9.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
